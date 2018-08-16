@@ -7,7 +7,7 @@ import java.util.List;
  * @author Dmitriy Grigorev
  */
 public class Box<T extends Fruit> {
-    private String name;
+    private final String name;
     private List<T> boxList = new ArrayList<>();
 
     public Box(String name) {
@@ -30,18 +30,18 @@ public class Box<T extends Fruit> {
         boxList.add(fruit);
     }
 
-    public void removeFruit() throws Exception {
+    public void removeFruit() {
         if (boxList.size() > 0) boxList.remove(0);
-        else throw new Exception("Box is empty!");
+        else throw new RuntimeException("Box is empty!");
     }
 
-    public void removeFruit(int quantity) throws Exception {
+    public void removeFruit(int quantity){
         if (boxList.size() == quantity) boxList.clear();
         else if (boxList.size() > quantity) {
             for (int i = 0; i < quantity; i++) {
                 boxList.remove(0);
             }
-        } else throw new Exception("Box has less elements than was passed in the method!");
+        } else throw new RuntimeException("Box has less elements than was passed in the method!");
     }
 
     public boolean compare(Box<? extends Fruit> box) {
@@ -84,9 +84,5 @@ public class Box<T extends Fruit> {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }
