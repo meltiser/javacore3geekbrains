@@ -31,18 +31,18 @@ public class FileGenerator {
     public File createFileWithPages(String name, int pages) throws IOException {
         File file = new File(name);
         file.createNewFile();
-        int symbols = 1800 * pages;
-        int content = 1;
+        Integer content = 1;
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-        StringBuilder sb = new StringBuilder();
-        for (int i = 1; i < symbols + 1; i++) {
-            sb.append(content);
-            if (i % 1800 == 0) {
-                content++;
-                writer.write(sb.toString());
-                writer.flush();
-                sb = new StringBuilder();
+        for (int i = 0; i < pages; i++) {
+            for (int j = 0; j < 1800; j++) {
+                writer.write(content.toString());
             }
+
+            if (content == 9) {
+                content = 0;
+            } else content++;
+
+            writer.flush();
         }
         writer.close();
         return file;

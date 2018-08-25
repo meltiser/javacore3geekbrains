@@ -40,8 +40,8 @@ public class ThirdTaskMain {
         int pageStart = page * 1800 - 1800;
         int pageFinish = pageStart + 1800;
         try (RandomAccessFile raf = new RandomAccessFile(file, "r")) {
+            raf.seek(pageStart);
             for (int i = pageStart; i < pageFinish; i++) {
-                raf.seek(i);
                 System.out.print((char) raf.read());
             }
             System.out.println();
