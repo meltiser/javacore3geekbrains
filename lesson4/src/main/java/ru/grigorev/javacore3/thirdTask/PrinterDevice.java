@@ -29,8 +29,7 @@ public class PrinterDevice implements Runnable {
     @Override
     public void run() {
         for (int i = 1; i < pages + 1; i++) {
-            String strCounter = "" + i;
-            System.out.println("Printed " + strCounter + " pages");
+            System.out.println("Printed " + i + " pages");
             try {
                 Thread.sleep(50); //better make longer delay
             } catch (InterruptedException e) {

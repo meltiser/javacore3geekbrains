@@ -6,7 +6,7 @@ package ru.grigorev.javacore3.firstTask;
 public class FirstTaskMain {
     private static ThreadsLogic threadsLogic = new ThreadsLogic();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Thread thread1 = new Thread(() -> threadsLogic.printA());
         Thread thread2 = new Thread(() -> threadsLogic.printB());
         Thread thread3 = new Thread(() -> threadsLogic.printC());
@@ -14,5 +14,9 @@ public class FirstTaskMain {
         thread1.start();
         thread2.start();
         thread3.start();
+
+        thread1.join();
+        thread2.join();
+        thread3.join();
     }
 }
