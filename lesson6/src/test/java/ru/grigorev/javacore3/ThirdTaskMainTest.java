@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class ThirdTaskMainTest {
     private static Connection connection;
     private static DAO dao;
-    private static final String testTable = "students_test";
+    private static final String TEST_TABLE = "students_test";
     private static DBInitInterface dbInitialization;
 
     @BeforeClass
@@ -28,12 +28,14 @@ public class ThirdTaskMainTest {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        dao = new DAOimpl(connection, testTable);
+        dao = new DAOimpl(connection, TEST_TABLE);
     }
 
     @AfterClass
     public static void closeConnection() {
         try {
+            connection.close();
+            connection = dbInitialization.initialize();
             dbInitialization.dropTestTable();
             connection.close();
         } catch (SQLException e) {
@@ -78,13 +80,8 @@ public class ThirdTaskMainTest {
         }
     }
 
-    @Ignore
     @Test(expected = SQLiteException.class)
-    public void printResultSet() {
-        try {
-            dao.insertStudent(1, "Petrov", 70);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void printResultSet() throws SQLException {
+        dao.insertStudent(1, "Petrov", 70);
     }
 }

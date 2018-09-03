@@ -1,7 +1,5 @@
 package ru.grigorev.javacore3.ThirdTask.dao;
 
-import ru.grigorev.javacore3.ThirdTask.dao.DAO;
-
 import java.sql.*;
 
 /**
