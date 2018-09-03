@@ -55,8 +55,8 @@ public class Car implements Runnable {
             race.getStages().get(i).go(this);
         }
         System.out.println(this.name + " закончил гонку!");
-        MainClass.finishCDL.countDown();
         positions.add(this.name);
+        MainClass.finishCDL.countDown();
     }
 }
 
