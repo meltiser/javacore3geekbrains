@@ -5,3 +5,7 @@
 *.class
 *.bat
 *.txt
+lesson6/target/classes/log4j
+lesson6/target/classes/log4j.xml
+lesson6/target/classes/log4j2.xml
+*.log
