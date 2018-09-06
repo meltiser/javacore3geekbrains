@@ -34,7 +34,8 @@ public class Main {
         int afterSuiteCounter = 0;
         Method afterSuiteMethod = null;
 
-        Map<Method, Integer> methodsWithPrioritiesMap = new HashMap<>();
+        //Set<Method> methodsWithPrioritiesSet = new TreeSet<>(Comparator.comparing(m -> m.getAnnotation(Test.class).priority()));
+        List<Method> methodWithPrioritiesList = new ArrayList<>();
 
         for (Method method : methods) {
             if (method.getAnnotation(BeforeSuite.class) != null) {
@@ -50,30 +51,24 @@ public class Main {
                 afterSuiteCounter++;
             }
             if (method.getAnnotation(Test.class) != null) {
-                methodsWithPrioritiesMap.put(method, method.getAnnotation(Test.class).priority());
+               // methodsWithPrioritiesSet.add(method);
+                methodWithPrioritiesList.add(method);
             }
         }
 
         if (beforeSuiteCounter > 1 || afterSuiteCounter > 1) throw new RuntimeException();
         if (beforeSuiteCounter == 1) beforeSuiteMethod.invoke(instance);
-        if (!methodsWithPrioritiesMap.isEmpty()) {
-            Map<Method, Integer> sortedMap = sortByValue(methodsWithPrioritiesMap);
-            for (Method testMethod : sortedMap.keySet()) {
-                testMethod.invoke(instance);
+        /*if (!methodsWithPrioritiesSet.isEmpty()) {
+            for (Method method : methodsWithPrioritiesSet) {
+                method.invoke(instance);
+            }
+        }*/
+        if (!methodWithPrioritiesList.isEmpty()) {
+            methodWithPrioritiesList.sort(Comparator.comparing(m -> m.getAnnotation(Test.class).priority()));
+            for (Method method : methodWithPrioritiesList) {
+                method.invoke(instance);
             }
         }
         if (afterSuiteCounter == 1) afterSuiteMethod.invoke(instance);
-    }
-
-    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
-        List<Entry<K, V>> list = new ArrayList<>(map.entrySet());
-        list.sort(Entry.comparingByValue());
-
-        Map<K, V> result = new LinkedHashMap<>();
-        for (Entry<K, V> entry : list) {
-            result.put(entry.getKey(), entry.getValue());
-        }
-
-        return result;
     }
 }
